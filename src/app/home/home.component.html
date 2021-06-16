@@ -1,0 +1,36 @@
+<div class="container-fluid body">
+    <div class="controls card bg-secondary">
+        <div class="card-header">
+            <h3>Controls</h3>
+        </div>
+        <div class="card-body">
+            <small *ngIf="locked">Volume control has been locked</small>
+            <div class="volume">
+                <mat-slider min="0" max="100" aria-label="Volume" [disabled]="locked" [(ngModel)]="volume" (input)="volumeUpdate($event)"></mat-slider>
+                <span>{{setVolume}}</span>
+            </div>
+            
+            <!-- <button class="btn" (click)="testLock()">Lock</button> -->
+
+            <div class="buttons">
+                <button class="play-pause btn btn-dark">
+                    <fa-icon style="color:white" icon="play"></fa-icon>
+                </button>
+                <button class="next-song btn btn-dark">
+                    <fa-icon style="color:white" icon="fast-forward"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="playlist card bg-secondary mt-3">
+        <div class="card-header">
+            <h3>Playlist</h3> 
+            <button class="btn btn-dark btn-sm" routerLink="/search">
+                <fa-icon style="color:white" icon="plus"></fa-icon>
+            </button>
+        </div>
+        <div class="card-body">
+
+        </div>
+    </div>
+</div>

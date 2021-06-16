@@ -1,0 +1,41 @@
+<div class="container-fluid body">
+    <form action="" (submit)="submitSearch()">
+        <div class="search input-group">
+            <input type="text" name="query" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="query">
+            <div class="input-group-append btn btn-dark" (click)="submitSearch()">
+                <fa-icon style="color:white" icon="search"></fa-icon>
+            </div>
+        </div>
+    </form>
+
+    <div class="results">
+        <div class="result" *ngFor="let result of results">
+            <div class="content">
+                <h3 class="title" [innerHTML]="result.snippet.title"></h3>
+                <div class="interactions">
+                    <button class="btn" (click)="addToPlaylist(result)" *ngIf="!result.adding && !result.complete">
+                        <fa-icon style="color:white" icon="plus"></fa-icon>
+                        Add to Playlist
+                    </button>
+                    <h3 class="complete" *ngIf="result.complete">Added Successfully</h3>
+                    <mat-progress-spinner class="small" color="primary" mode="{{ (result.percent ? 'determinate' : 'indeterminate') }}" [value]="result.percent" *ngIf="result.adding && !result.complete"></mat-progress-spinner>
+                </div>
+            </div>
+            <img [src]="result.snippet.thumbnails.medium.url" alt="">
+            <!-- <div class="card-body">
+                <div class="info">
+                    
+                </div>
+                <div class="buttons">
+                    
+                </div>
+            </div> -->
+        </div>
+        <div class="loading" *ngIf="searching">
+            <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        </div>
+        <button class="btn more" *ngIf="results.length && !searching && nextPageToken" (click)="loadMore()">Load More</button>
+    </div>
+
+    
+</div>

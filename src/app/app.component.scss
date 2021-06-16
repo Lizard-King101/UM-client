@@ -1,0 +1,13 @@
+:host {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    .navbar {
+
+    }
+
+    ng-component {
+        flex: 1 0 0px;
+    }
+}
