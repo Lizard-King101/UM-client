@@ -15,6 +15,8 @@ export class HomePageComponent {
         console.log(socket.io);
         
         this.socket.io.on('set-volume', (setVol: SetVolume) => {
+            console.log(setVol);
+            
             if(setVol.emitter && setVol.emitter == this.socket.io.id) return;
             this.volume = this.setVolume = setVol.volume;
             this.locked = setVol.locked;
