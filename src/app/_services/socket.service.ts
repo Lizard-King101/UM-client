@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 @Injectable()
 export class SocketService {
     connected: boolean = false;
-
+    thanks: boolean = false;
     public io;
 
     constructor(){
@@ -20,4 +20,5 @@ export interface Connection {
     client_auth: boolean;
     message?: string;
     room?: string;
+    thanks?: boolean;
 }

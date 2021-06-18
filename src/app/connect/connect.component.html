@@ -1,4 +1,9 @@
 <div class="container-fluid body">
+
+    <div class="thanks" *ngIf="socket.thanks">
+        <h2>Thank you!!</h2>
+        <p>Thank you for riding with me and I hope you enjoyed it.</p>
+    </div>
     <div class="card bg-secondary">
         <div class="card-header">
             <h1>Ride ID</h1>

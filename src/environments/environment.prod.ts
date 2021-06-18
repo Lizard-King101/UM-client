@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  socket: 'http://api.multihosts.net'
+  socket: 'https://api.multihosts.net/'
 };

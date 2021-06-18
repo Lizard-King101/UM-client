@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { Component } from "@angular/core";
 import { SocketService } from "../_services/socket.service";
 
 @Component({
@@ -9,15 +8,10 @@ import { SocketService } from "../_services/socket.service";
 export class ConnectPageComponent {
     ride: string;
 
-    constructor(private snackBar: MatSnackBar, private socket: SocketService) {
-        this.socket.io.on('test-return', () => {
-            console.log('RETURN');
-        })
+    constructor( public socket: SocketService) {
     }
 
     submitRideID() {
-        console.log(this.ride);
-        
-        this.socket.io.emit('submit-room', this.ride);
+        this.socket.io.emit('submit-room', this.ride.toLocaleLowerCase());
     }
 }

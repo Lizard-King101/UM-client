@@ -48,6 +48,7 @@ export class AppComponent {
                 this.socket.connected = false;
                 localStorage.removeItem('room');
                 this.router.navigate([''], {replaceUrl: true});
+                this.socket.thanks = connection.thanks ? true : false;
                 if(connection.message) this.snackBar.open(connection.message, 'Okay', {duration: 1000});
             }
         });

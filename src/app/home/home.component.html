@@ -1,11 +1,17 @@
 <div class="container-fluid body">
     <div class="controls card bg-secondary">
-        <div class="card-header">
-            <h3>Controls</h3>
-        </div>
         <div class="card-body">
-            <small *ngIf="locked">Volume control has been locked</small>
+            <div class="title-album">
+                <div class="album">
+                    <img [src]="status.song != undefined ? url + 'thumbnails/' + status.song.video_id : 'assets/no_cover_light.jpg'" alt="">
+                </div>
+                <h3>{{ status.song ? status.song.title : '' }}</h3>
+            </div>
+
             <div class="volume">
+                <div class="lock">
+                    <fa-icon style="color:white" icon="lock" *ngIf="locked"></fa-icon>
+                </div>
                 <mat-slider min="0" max="100" aria-label="Volume" [disabled]="locked" [(ngModel)]="volume" (input)="volumeUpdate($event)"></mat-slider>
                 <span>{{setVolume}}</span>
             </div>
@@ -13,10 +19,10 @@
             <!-- <button class="btn" (click)="testLock()">Lock</button> -->
 
             <div class="buttons">
-                <button class="play-pause btn btn-dark">
-                    <fa-icon style="color:white" icon="play"></fa-icon>
+                <button class="play-pause btn btn-dark" (click)="onTogglePlay()">
+                    <fa-icon style="color:white" [icon]="status.playing ? 'pause' : 'play'"></fa-icon>
                 </button>
-                <button class="next-song btn btn-dark">
+                <button class="next-song btn btn-dark" (click)="onNext()">
                     <fa-icon style="color:white" icon="fast-forward"></fa-icon>
                 </button>
             </div>
@@ -30,7 +36,15 @@
             </button>
         </div>
         <div class="card-body">
-
+            <div class="item" *ngFor="let song of songs" (click)="playSong(song)">
+                <div class="album">
+                    <img [src]="url + 'thumbnails/' + song.video_id" alt="">
+                </div>
+                <div class="info">
+                    <h4>{{ song.title }}</h4>
+                    <p>{{ song.artist }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

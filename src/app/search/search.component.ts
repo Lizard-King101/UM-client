@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { SearchService } from "../_services/search.service";
 import { SocketService } from "../_services/socket.service";
 
@@ -6,18 +7,28 @@ import { SocketService } from "../_services/socket.service";
     templateUrl: 'search.component.html',
     styleUrls: ['search.component.scss']
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements OnDestroy{
     query: string;
     pastQuery: string;
     searching: boolean = false;
     results: any[] = [];
     nextPageToken: string;
-    constructor(private yt: SearchService, private socket: SocketService) {
+
+    constructor(private yt: SearchService, private socket: SocketService, private snackBar: MatSnackBar) {
         socket.io.on('song-progress', (data: {id: string, percent?: number}) => {
             this.results.forEach((result) => {
                 if(result.id.videoId == data.id) {
                     result.adding = true;
                     if(data.percent) result.percent = data.percent;
+                }
+            })
+        });
+
+        socket.io.on('song-error', (data: {id: string, message: string}) => {
+            this.snackBar.open(data.message, 'Okay', {duration: 1000});
+            this.results.forEach((result) => {
+                if(result.id.videoId == data.id) {
+                    result.adding = false;
                 }
             })
         });
@@ -30,6 +41,12 @@ export class SearchPageComponent {
                 }
             });
         })
+    }
+
+    ngOnDestroy() {
+        this.socket.io.off('song-progress');
+        this.socket.io.off('song-error');
+        this.socket.io.off('song-complete');
     }
 
     submitSearch() {
